@@ -1,10 +1,10 @@
 class Game {
     // code to be added
-    constructor () {
+    constructor (gameScreen, left, top, width, height, imgSrc) {
         this.startScreen = document.getElementById(`game-intro`);
         this.gameScreen = document.getElementById(`game-screen`);
         this.gameEndScreen = document.getElementById(`game-end`);
-        this.player = null;
+        this.player = new Player(this.gameScreen, 200, 500, 100, 150, "./images/car.png");
         this.height = 600;
         this.width = 500;
         this.obstacles = [];
@@ -14,8 +14,14 @@ class Game {
     }
 
     start (){
-        this.hideElements(this.startScreen);
-        this.showElements(this.gameScreen);
+        this.gameScreen.style.height = `${this.height}px`;
+        this.gameScreen.style.width = `${this.width}px`;
+
+        this.startScreen.style.display = "none";
+
+        this.gameScreen.style.display = "block";
+
+        this.gameLoop();
 
     }
 
@@ -23,6 +29,15 @@ class Game {
 
 
     gameLoop (){
+        console.log(`in the game loop`);
+
+        if(this.gameIsOver){
+            return;
+        }
+
+        this.update();
+
+        window.requestAnimationFrame(() => this.gameLoop())
 
     }
     
@@ -31,15 +46,13 @@ class Game {
 
     
     update(){
-
+        console.log(`In the update`);
+        this.player.move();
 
 
 
 
     }
-
-
-
 
 
 }
